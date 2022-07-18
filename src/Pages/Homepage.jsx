@@ -22,11 +22,12 @@ import { useSearchParams } from "react-router-dom";
 import * as types from '../Redux/actionTypes'
 
 
+
 const Homepage = () => {
 
+  
   const dispatch=useDispatch()
   const [searchParams,setSearchParams] = useSearchParams()
-  console.log(searchParams)
 
   const data= useSelector((state)=>state.countries)
 
@@ -44,10 +45,18 @@ const Homepage = () => {
   useEffect(()=>{
     // dispatch({type:types.GET_COUNTRIES_SUCCESS,payload:res.data})
    const value=searchParams.getAll('order')
+   
    const Array=[...data]
-   if(value==="asc"){
-    Array?.sort((e)=>+(e.population)- +(e.population))
-    dispatch({type:types.GET_COUNTRIES_SUCCESS,Array})
+   if(value[0]==="asc"){
+    Array?.sort((a,b)=>+(a.population)- +(b.population))
+
+
+     dispatch({type:types.GET_COUNTRIES_SUCCESS,payload:Array})
+   }
+   if(value[0]==="desc"){
+    Array?.sort((b,a)=>+(a.population)- +(b.population))
+
+     dispatch({type:types.GET_COUNTRIES_SUCCESS,payload:Array})
    }
    
 
